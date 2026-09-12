@@ -1,0 +1,23 @@
+name: CD - Continuous Delivery
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  deploy-artifact:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout do código
+      uses: actions/checkout@v4
+
+    - name: Empacotar Aplicação
+      run: |
+        echo "Preparando o script principal para entrega..."
+        echo "Deploy simulado com sucesso!"
+
+    - name: Upload do Artefato
+      uses: actions/upload-artifact@v4
+      with:
+        name: qrcode-app
+        path: main.py
