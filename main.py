@@ -48,9 +48,9 @@ def criar_qrcode():
 
     try:
         arquivo_final = salvar_qrcode(dados, nome_arquivo)
-        print(f"\n✅ Sucesso! Seu QR Code foi gerado e salvo como '{arquivo_final}'.")
+        print(f"\n Sucesso! Seu QR Code foi gerado e salvo como '{arquivo_final}'.")
     except Exception as e:
-        print(f"\n❌ Ocorreu um erro ao gerar o QR Code: {e}")
+        print(f"\n Ocorreu um erro ao gerar o QR Code: {e}")
 
 if __name__ == "__main__":
     criar_qrcode()

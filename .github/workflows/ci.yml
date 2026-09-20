@@ -29,9 +29,6 @@ jobs:
         run: |
           python -m unittest test_main.py -v
 
-      # ========================================================
-      # CONFIGURAÇÃO DE ENVIO DE ALERTAS (Semana 6)
-      # ========================================================
       - name: Enviar Alerta de Sucesso
         if: success()
         run: |
