@@ -1,10 +1,45 @@
-﻿name: CI - Code Quality
+name: CI - Code Quality & Testes Unitários
+
 on:
   pull_request:
     branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+
 jobs:
   test:
+    name: Executar Testes Unitários e Validação
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - run: echo "Verificação de CI concluída com sucesso!"
+      - name: Checkout do Código
+        uses: actions/checkout@v4
+
+      - name: Configurar Ambiente Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Instalar Dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Executar Testes Unitários
+        run: |
+          python -m unittest test_main.py -v
+
+      # ========================================================
+      # CONFIGURAÇÃO DE ENVIO DE ALERTAS (Semana 6)
+      # ========================================================
+      - name: Enviar Alerta de Sucesso
+        if: success()
+        run: |
+          echo "::notice title=Alerta de Sucesso::✅ Pipeline de CI concluída com sucesso! Todos os testes unitários foram aprovados."
+          echo "Status da execução: SUCESSO na branch ${{ github.ref }}"
+
+      - name: Enviar Alerta de Falha
+        if: failure()
+        run: |
+          echo "::error title=Alerta de Falha::🚨 ALERTA: A execução dos testes unitários falhou no commit ${{ github.sha }}!"
+          echo "Status da execução: FALHA na branch ${{ github.ref }}"
